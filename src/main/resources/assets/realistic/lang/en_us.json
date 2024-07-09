@@ -1,0 +1,16 @@
+{
+  "item.realistic.sugar_cane_juice_bucket": "Bucket of Sugar Cane Juice",
+  "item.realistic.crystallized_sugar_cane_juice_bucket": "Bucket of Crystallized Sugar Cane Juice",
+  "item.realistic.molten_sugar_bucket": "Bucket of Molten Sugar",
+  "item.realistic.golden_raw_sugar_bucket": "Bucket of Golden Raw Sugar",
+  "item.realistic.golden_raw_sugar": "Golden Raw Sugar",
+  "item.realistic.knife": "Knife",
+  "item.realistic.cut_sugar_cane": "Cut Sugar Cane",
+  "item.realistic.cut_washed_sugar_cane": "Cut, Washed Sugar Cane",
+  "block.realistic.centrifuge": "Centrifuge",
+  "block.realistic.sugar_mill": "Sugar Mill",
+  "block.realistic.sugar_cane_juice": "Sugar Cane Juice",
+  "block.realistic.crystallized_sugar_cane_juice": "Crystallized Sugar Cane Juice",
+  "block.realistic.molten_sugar": "Molten Sugar",
+  "itemGroup.re_tab": "Realistic Everything"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "realistic:item/crystallized_sugar_cane_juice_bucket"
+  }
+}
