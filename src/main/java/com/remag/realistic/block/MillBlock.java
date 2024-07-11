@@ -1,7 +1,7 @@
 package com.remag.realistic.block;
 
+import com.remag.realistic.block.entity.MillBlockEntity;
 import com.remag.realistic.block.entity.ModBlockEntities;
-import com.remag.realistic.block.entity.SugarMillBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,13 +27,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class SugarMillBlock extends BaseEntityBlock {
+public class MillBlock extends BaseEntityBlock {
 
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     public static final DirectionProperty FACING;
     public static final BooleanProperty LIT;
 
-    public SugarMillBlock(Properties properties) {
+    public MillBlock(Properties properties) {
         super(properties);
         this.registerDefaultState((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(FACING, Direction.NORTH)).setValue(LIT, false));
     }
@@ -73,8 +73,8 @@ public class SugarMillBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof SugarMillBlockEntity) {
-                ((SugarMillBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof MillBlockEntity) {
+                ((MillBlockEntity) blockEntity).drops();
             }
         }
 
@@ -85,10 +85,10 @@ public class SugarMillBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof SugarMillBlockEntity) {
-                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (SugarMillBlockEntity)entity, pPos);
+            if(entity instanceof MillBlockEntity) {
+                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (MillBlockEntity)entity, pPos);
             } else {
-                throw new IllegalStateException("Our Container provider is missing! " + entity + " is not an instance of SugarMillBlockEntity! pPos: " + pPos);
+                throw new IllegalStateException("Our Container provider is missing! " + entity + " is not an instance of MillBlockEntity! pPos: " + pPos);
             }
         }
 
@@ -98,7 +98,7 @@ public class SugarMillBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new SugarMillBlockEntity(blockPos, blockState);
+        return new MillBlockEntity(blockPos, blockState);
     }
 
     @Nullable
@@ -108,7 +108,7 @@ public class SugarMillBlock extends BaseEntityBlock {
             return null;
         }
 
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.SUGAR_MILL.get(),
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.MILL.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 }

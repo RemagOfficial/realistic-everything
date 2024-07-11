@@ -1,8 +1,8 @@
-package com.remag.realistic.screen.sugarmill;
+package com.remag.realistic.screen.mill;
 
 import com.remag.realistic.block.ModBlocks;
 
-import com.remag.realistic.block.entity.SugarMillBlockEntity;
+import com.remag.realistic.block.entity.MillBlockEntity;
 import com.remag.realistic.screen.ModMenuTypes;
 import com.remag.realistic.util.OutputGUISlot;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,19 +15,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class SugarMillMenu extends AbstractContainerMenu {
-    public final SugarMillBlockEntity blockEntity;
+public class MillMenu extends AbstractContainerMenu {
+    public final MillBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public SugarMillMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public MillMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
     }
 
-    public SugarMillMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.SUGAR_MILL_MENU.get(), pContainerId);
+    public MillMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(ModMenuTypes.MILL_MENU.get(), pContainerId);
         checkContainerSize(inv, 4);
-        blockEntity = ((SugarMillBlockEntity) entity);
+        blockEntity = ((MillBlockEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -112,7 +112,7 @@ public class SugarMillMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, ModBlocks.SUGAR_MILL.get());
+                pPlayer, ModBlocks.MILL.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

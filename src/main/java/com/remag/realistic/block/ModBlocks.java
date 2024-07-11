@@ -14,12 +14,14 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RealisticEverything.MODID);
 
+    // block entities
+
     public static final RegistryObject<Block> CENTRIFUGE = BLOCKS.register("centrifuge",
             () -> new CentrifugeBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
                     .strength(5f, 6f).requiresCorrectToolForDrops()));
 
-    public static final RegistryObject<Block> SUGAR_MILL = BLOCKS.register("sugar_mill",
-            () -> new SugarMillBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+    public static final RegistryObject<Block> MILL = BLOCKS.register("mill",
+            () -> new MillBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
                     .strength(5f, 6f).requiresCorrectToolForDrops()));
 
     // fluid blocks
@@ -32,6 +34,14 @@ public class ModBlocks {
 
     public static final RegistryObject<LiquidBlock> MOLTEN_SUGAR = BLOCKS.register("molten_sugar",
             () -> new LiquidBlock(ModFluids.SOURCE_MOLTEN_SUGAR, BlockBehaviour.Properties.copy(Blocks.LAVA)));
+
+    public static final RegistryObject<LiquidBlock> SODIUM_CARBONATE_SOLUTION = BLOCKS.register("sodium_carbonate_solution",
+            () -> new LiquidBlock(ModFluids.SOURCE_SODIUM_CARBONATE_SOLUTION, BlockBehaviour.Properties.copy(Blocks.WATER)));
+
+    // normal blocks
+
+    public static final RegistryObject<Block> TRONA_ORE = BLOCKS.register("trona_ore",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK)));
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);

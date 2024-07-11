@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "top": "realistic:block/sugar_mill_top",
-    "side": "realistic:block/sugar_mill_side",
-    "front": "realistic:block/sugar_mill_front_off",
-    "particle": "realistic:block/sugar_mill_front_off"
-  }
-}

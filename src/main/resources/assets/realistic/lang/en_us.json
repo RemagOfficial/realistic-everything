@@ -7,10 +7,21 @@
   "item.realistic.knife": "Knife",
   "item.realistic.cut_sugar_cane": "Cut Sugar Cane",
   "item.realistic.cut_washed_sugar_cane": "Cut, Washed Sugar Cane",
+  "item.realistic.butter": "Butter",
+  "item.realistic.flour": "Flour",
+  "item.realistic.baking_powder": "Baking Powder",
+  "item.realistic.cake_batter": "Cake Batter",
+  "item.realistic.trona_shard": "Trona Shard",
+  "item.realistic.sodium_carbonate_solution_bucket": "Bucket of Sodium Carbonate Solution",
+  "item.realistic.bucket_of_cream": "Bucket of Cream",
+
   "block.realistic.centrifuge": "Centrifuge",
-  "block.realistic.sugar_mill": "Sugar Mill",
+  "block.realistic.mill": "Mill",
+  "block.realistic.trona_ore": "Trona Ore",
   "block.realistic.sugar_cane_juice": "Sugar Cane Juice",
   "block.realistic.crystallized_sugar_cane_juice": "Crystallized Sugar Cane Juice",
   "block.realistic.molten_sugar": "Molten Sugar",
+  "block.realistic.sodium_carbonate_solution": "Sodium Carbonate Solution",
+
   "itemGroup.re_tab": "Realistic Everything"
 }

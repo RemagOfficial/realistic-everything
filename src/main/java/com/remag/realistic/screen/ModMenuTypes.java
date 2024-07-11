@@ -2,7 +2,7 @@ package com.remag.realistic.screen;
 
 import com.remag.realistic.RealisticEverything;
 import com.remag.realistic.screen.centrifuge.CentrifugeMenu;
-import com.remag.realistic.screen.sugarmill.SugarMillMenu;
+import com.remag.realistic.screen.mill.MillMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -19,8 +19,8 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<CentrifugeMenu>> CENTRIFUGE_MENU =
             registerMenuType("centrifuge_menu", CentrifugeMenu::new);
 
-    public static final RegistryObject<MenuType<SugarMillMenu>> SUGAR_MILL_MENU =
-            registerMenuType("sugar_mill_menu", SugarMillMenu::new);
+    public static final RegistryObject<MenuType<MillMenu>> MILL_MENU =
+            registerMenuType("mill_menu", MillMenu::new);
 
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {

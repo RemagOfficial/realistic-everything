@@ -17,10 +17,10 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(CentrifugeBlockEntity::new,
                             ModBlocks.CENTRIFUGE.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<SugarMillBlockEntity>> SUGAR_MILL =
-            BLOCK_ENTITIES.register("sugar_mill", () ->
-                    BlockEntityType.Builder.of(SugarMillBlockEntity::new,
-                            ModBlocks.SUGAR_MILL.get()).build(null));
+    public static final RegistryObject<BlockEntityType<MillBlockEntity>> MILL =
+            BLOCK_ENTITIES.register("mill", () ->
+                    BlockEntityType.Builder.of(MillBlockEntity::new,
+                            ModBlocks.MILL.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "realistic:cake_batter"
+  },
+  "result": {
+    "item": "minecraft:cake"
+  },
+  "experience": 0.1,
+  "cookingtime": 200
+}

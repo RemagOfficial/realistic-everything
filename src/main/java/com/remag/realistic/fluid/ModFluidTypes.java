@@ -26,6 +26,9 @@ public class ModFluidTypes {
     public static final RegistryObject<FluidType> MOLTEN_SUGAR_TYPE = registerMoltenSugar("molten_sugar",
             FluidType.Properties.create().lightLevel(2).temperature(3000));
 
+    public static final RegistryObject<FluidType> SODIUM_CARBONATE_SOLUTION_TYPE = registerSodiumCarbonateSolution("sodium_carbonate_solution",
+            FluidType.Properties.create().lightLevel(2).temperature(3000));
+
     private static RegistryObject<FluidType> registerSugarCaneJuice(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, WATER_OVERLAY_RL,
                 0xA19FB800, new Vector3f(0.623f, 0.720f, 0.000f), properties));
@@ -39,6 +42,11 @@ public class ModFluidTypes {
     private static RegistryObject<FluidType> registerMoltenSugar(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, WATER_OVERLAY_RL,
                 0xA1CECDC5, new Vector3f(0.804f, 0.803f, 0.773f), properties));
+    }
+
+    private static RegistryObject<FluidType> registerSodiumCarbonateSolution(String name, FluidType.Properties properties) {
+        return FLUID_TYPES.register(name, () -> new BaseFluidType(WATER_STILL_RL, WATER_FLOWING_RL, WATER_OVERLAY_RL,
+                0xA14875F7, new Vector3f(0.282f, 0.459f, 0.969f), properties));
     }
 
     public static void register(IEventBus eventBus) {

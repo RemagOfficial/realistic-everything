@@ -1,4 +1,4 @@
-package com.remag.realistic.screen.sugarmill;
+package com.remag.realistic.screen.mill;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.remag.realistic.RealisticEverything;
@@ -9,11 +9,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class SugarMillScreen extends AbstractContainerScreen<SugarMillMenu> {
+public class MillScreen extends AbstractContainerScreen<MillMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(RealisticEverything.MODID, "textures/gui/sugar_mill_gui.png");
+            new ResourceLocation(RealisticEverything.MODID, "textures/gui/mill_gui.png");
 
-    public SugarMillScreen(SugarMillMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public MillScreen(MillMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 

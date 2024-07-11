@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "realistic:block/mill_top",
+    "side": "realistic:block/mill_side",
+    "front": "realistic:block/mill_front_on",
+    "particle": "realistic:block/mill_front_on"
+  }
+}

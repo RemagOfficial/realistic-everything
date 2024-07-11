@@ -1,5 +1,6 @@
 package com.remag.realistic.mixin;
 
+import com.remag.realistic.block.ModBlocks;
 import com.remag.realistic.item.ModItems;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
@@ -14,8 +15,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Random;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
@@ -39,7 +38,7 @@ public abstract class ItemEntityMixin extends Entity {
     private int realisticEverything$washingDelay = 0;
 
     @Inject(at = @At("RETURN"), method = "tick")
-    void handleSugarCaneWashing(CallbackInfo ci) {
+    void handleItemEntities(CallbackInfo ci) {
         if (this.isRemoved()) {
             return;
         }
@@ -51,6 +50,10 @@ public abstract class ItemEntityMixin extends Entity {
                     level().addParticle(ParticleTypes.DRIPPING_WATER, this.getX(), this.getY() + 0.2f, this.getZ(), 0.0D, 0.0D, 0.0D);
                 }
             }
+        }
+        if (this.getItem().getItem() == ModItems.TRONA_SHARD.get() && this.isInFluidType(Fluids.WATER.getFluidType())) {
+            level().setBlock(this.blockPosition(), ModBlocks.SODIUM_CARBONATE_SOLUTION.get().defaultBlockState(), 3);
+            this.setItem(new ItemStack(ModItems.TRONA_SHARD.get(), this.getItem().getCount() - 1));
         }
         if (this.getItem().getItem() == ModItems.CUT_SUGAR_CANE.get() && this.isInFluidType(Fluids.WATER.getFluidType())) {
             int itemCount = this.getItem().getCount();

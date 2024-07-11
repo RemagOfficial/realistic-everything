@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "realistic:baking_powder"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "item": "realistic:flour"
+    },
+    {
+      "item": "realistic:butter"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:egg"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "realistic:cake_batter",
+    "count": 1
+  }
+}

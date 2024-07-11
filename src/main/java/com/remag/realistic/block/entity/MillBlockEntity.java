@@ -1,7 +1,7 @@
 package com.remag.realistic.block.entity;
 
 import com.remag.realistic.item.ModItems;
-import com.remag.realistic.screen.sugarmill.SugarMillMenu;
+import com.remag.realistic.screen.mill.MillMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +27,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
+public class MillBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(4);
 
     private static final int INPUT_SUGAR_SLOT = 0;
@@ -44,16 +44,16 @@ public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
     private int maxFuelTime = 10;
 
 
-    public SugarMillBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.SUGAR_MILL.get(), pPos, pBlockState);
+    public MillBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.MILL.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
                 return switch (pIndex) {
-                    case 0 -> SugarMillBlockEntity.this.progress;
-                    case 1 -> SugarMillBlockEntity.this.maxProgress;
-                    case 2 -> SugarMillBlockEntity.this.fuelTime;
-                    case 3 -> SugarMillBlockEntity.this.maxFuelTime;
+                    case 0 -> MillBlockEntity.this.progress;
+                    case 1 -> MillBlockEntity.this.maxProgress;
+                    case 2 -> MillBlockEntity.this.fuelTime;
+                    case 3 -> MillBlockEntity.this.maxFuelTime;
                     default -> 0;
                 };
             }
@@ -61,10 +61,10 @@ public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0 -> SugarMillBlockEntity.this.progress = pValue;
-                    case 1 -> SugarMillBlockEntity.this.maxProgress = pValue;
-                    case 2 -> SugarMillBlockEntity.this.fuelTime = pValue;
-                    case 3 -> SugarMillBlockEntity.this.maxFuelTime = pValue;
+                    case 0 -> MillBlockEntity.this.progress = pValue;
+                    case 1 -> MillBlockEntity.this.maxProgress = pValue;
+                    case 2 -> MillBlockEntity.this.fuelTime = pValue;
+                    case 3 -> MillBlockEntity.this.maxFuelTime = pValue;
                 }
             }
 
@@ -106,19 +106,19 @@ public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.realistic.sugar_mill");
+        return Component.translatable("block.realistic.mill");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new SugarMillMenu(pContainerId, pPlayerInventory, this, this.data);
+        return new MillMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
-        pTag.putInt("sugar_mill.progress", progress);
+        pTag.putInt("mill.progress", progress);
 
         super.saveAdditional(pTag);
     }
@@ -127,27 +127,43 @@ public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-        progress = pTag.getInt("sugar_mill.progress");
+        progress = pTag.getInt("mill.progress");
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if(hasRecipe()) {
-            if(isLit()){
+        if(hasRecipeSCJ()) {
+            if (isLit()) {
                 increaseCraftingProgress();
                 setChanged(pLevel, pPos, pState);
 
-                if(hasProgressFinished()) {
+                if (hasProgressFinished()) {
                     reduceFuelTime();
-                    craftItem();
+                    craftItemSCJ();
                     resetProgress();
                 }
             } else {
-                if(this.itemHandler.getStackInSlot(FUEL_SLOT).getCount() > 0) {
+                if (this.itemHandler.getStackInSlot(FUEL_SLOT).getCount() > 0) {
                     useFuel();
                     setChanged(pLevel, pPos, pState);
                 }
             }
-        } else {
+        } else if(hasRecipeFlour()) {
+            if (isLit()) {
+                increaseCraftingProgress();
+                setChanged(pLevel, pPos, pState);
+
+                if (hasProgressFinished()) {
+                    reduceFuelTime();
+                    craftItemFlour();
+                    resetProgress();
+                }
+            } else {
+                if (this.itemHandler.getStackInSlot(FUEL_SLOT).getCount() > 0) {
+                    useFuel();
+                    setChanged(pLevel, pPos, pState);
+                }
+            }
+        } else if (!validRecipe()){
             resetProgress();
             if (isLit()) {
                 reduceFuelTime();
@@ -174,7 +190,7 @@ public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
         return this.fuelTime > 0;
     }
 
-    private void craftItem() {
+    private void craftItemSCJ() {
         ItemStack result = new ItemStack(ModItems.SUGAR_CANE_JUICE_BUCKET.get(), 1);
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
                 this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
@@ -182,13 +198,32 @@ public class SugarMillBlockEntity extends BlockEntity implements MenuProvider {
         this.itemHandler.getStackInSlot(INPUT_BUCKET_SLOT).shrink(1);
     }
 
-    private boolean hasRecipe() {
+    private void craftItemFlour() {
+        ItemStack result = new ItemStack(ModItems.FLOUR.get(), 1);
+        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
+                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+        this.itemHandler.getStackInSlot(INPUT_SUGAR_SLOT).shrink(1);
+    }
+
+    private boolean hasRecipeSCJ() {
         boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SUGAR_SLOT).getItem() == ModItems.CUT_WASHED_SUGAR_CANE.get();
         boolean hasFuel = this.itemHandler.getStackInSlot(FUEL_SLOT).getItem() == Items.OAK_LOG;
         boolean hasBucket = this.itemHandler.getStackInSlot(INPUT_BUCKET_SLOT).getItem() == Items.BUCKET;
         ItemStack result = new ItemStack(ModItems.SUGAR_CANE_JUICE_BUCKET.get(), 1);
 
         return hasCraftingItem && (hasFuel || this.fuelTime > 0) && hasBucket && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    private boolean hasRecipeFlour() {
+        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SUGAR_SLOT).getItem() == Items.WHEAT;
+        boolean hasFuel = this.itemHandler.getStackInSlot(FUEL_SLOT).getItem() == Items.OAK_LOG;
+        ItemStack result = new ItemStack(ModItems.FLOUR.get(), 1);
+
+        return hasCraftingItem && (hasFuel || this.fuelTime > 0) && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    private boolean validRecipe() {
+        return hasRecipeSCJ() || hasRecipeFlour();
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {

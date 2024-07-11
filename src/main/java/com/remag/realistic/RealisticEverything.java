@@ -9,7 +9,7 @@ import com.remag.realistic.fluid.ModFluids;
 import com.remag.realistic.item.ModItems;
 import com.remag.realistic.screen.centrifuge.CentrifugeScreen;
 import com.remag.realistic.screen.ModMenuTypes;
-import com.remag.realistic.screen.sugarmill.SugarMillScreen;
+import com.remag.realistic.screen.mill.MillScreen;
 import com.remag.realistic.tab.ModCreativeModeTab;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -85,7 +85,7 @@ public class RealisticEverything
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             MenuScreens.register(ModMenuTypes.CENTRIFUGE_MENU.get(), CentrifugeScreen::new);
-            MenuScreens.register(ModMenuTypes.SUGAR_MILL_MENU.get(), SugarMillScreen::new);
+            MenuScreens.register(ModMenuTypes.MILL_MENU.get(), MillScreen::new);
 
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SUGAR_CANE_JUICE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SUGAR_CANE_JUICE.get(), RenderType.translucent());
@@ -95,6 +95,9 @@ public class RealisticEverything
 
             ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_MOLTEN_SUGAR.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_MOLTEN_SUGAR.get(), RenderType.translucent());
+
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_SODIUM_CARBONATE_SOLUTION.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_SODIUM_CARBONATE_SOLUTION.get(), RenderType.translucent());
         }
     }
 }

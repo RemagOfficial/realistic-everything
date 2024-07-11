@@ -34,6 +34,13 @@ public class ModFluids {
     public static final RegistryObject<FlowingFluid> FLOWING_MOLTEN_SUGAR = FLUIDS.register("flowing_molten_sugar",
             () -> new ForgeFlowingFluid.Flowing(ModFluids.MOLTEN_SUGAR_PROPERTIES));
 
+    public static final RegistryObject<FlowingFluid> SOURCE_SODIUM_CARBONATE_SOLUTION = FLUIDS.register("sodium_carbonate_solution",
+            () -> new SodiumCarbonateSolutionFluid.Source(ModFluids.SODIUM_CARBONATE_SOLUTION_PROPERTIES));
+    public static final RegistryObject<FlowingFluid> FLOWING_SODIUM_CARBONATE_SOLUTION = FLUIDS.register("flowing_sodium_carbonate_solution",
+            () -> new ForgeFlowingFluid.Flowing(ModFluids.SODIUM_CARBONATE_SOLUTION_PROPERTIES));
+
+
+
     public static final ForgeFlowingFluid.Properties SUGAR_CANE_JUICE_PROPERTIES = new ForgeFlowingFluid.Properties(
             ModFluidTypes.SUGAR_CANE_JUICE_TYPE, SOURCE_SUGAR_CANE_JUICE, FLOWING_SUGAR_CANE_JUICE)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.SUGAR_CANE_JUICE).bucket(ModItems.SUGAR_CANE_JUICE_BUCKET);
@@ -45,6 +52,10 @@ public class ModFluids {
     public static final ForgeFlowingFluid.Properties MOLTEN_SUGAR_PROPERTIES = new ForgeFlowingFluid.Properties(
             ModFluidTypes.MOLTEN_SUGAR_TYPE, SOURCE_MOLTEN_SUGAR, FLOWING_MOLTEN_SUGAR)
             .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.MOLTEN_SUGAR).bucket(ModItems.MOLTEN_SUGAR_BUCKET);
+
+    public static final ForgeFlowingFluid.Properties SODIUM_CARBONATE_SOLUTION_PROPERTIES = new ForgeFlowingFluid.Properties(
+            ModFluidTypes.SODIUM_CARBONATE_SOLUTION_TYPE, SOURCE_SODIUM_CARBONATE_SOLUTION, FLOWING_SODIUM_CARBONATE_SOLUTION)
+            .slopeFindDistance(2).levelDecreasePerBlock(2).block(ModBlocks.SODIUM_CARBONATE_SOLUTION).bucket(ModItems.SODIUM_CARBONATE_SOLUTION_BUCKET);
 
     public static void register(IEventBus eventBus) {
         FLUIDS.register(eventBus);

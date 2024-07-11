@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -130,14 +131,14 @@ public class CentrifugeBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if(hasRecipe()) {
+        if(hasRecipeSugar()) {
             if(isLit()){
                 increaseCraftingProgress();
                 setChanged(pLevel, pPos, pState);
 
                 if(hasProgressFinished()) {
                     reduceFuelTime();
-                    craftItem();
+                    craftItemSugar();
                     resetProgress();
                 }
             } else {
@@ -146,7 +147,23 @@ public class CentrifugeBlockEntity extends BlockEntity implements MenuProvider {
                     setChanged(pLevel, pPos, pState);
                 }
             }
-        } else {
+        } else if(hasRecipeCream()) {
+            if(isLit()){
+                increaseCraftingProgress();
+                setChanged(pLevel, pPos, pState);
+
+                if(hasProgressFinished()) {
+                    reduceFuelTime();
+                    craftItemCream();
+                    resetProgress();
+                }
+            } else {
+                if(this.itemHandler.getStackInSlot(FUEL_SLOT).getCount() > 0) {
+                    useFuel();
+                    setChanged(pLevel, pPos, pState);
+                }
+            }
+        } else if (!validRecipe()) {
             resetProgress();
             if (isLit()) {
                 reduceFuelTime();
@@ -173,19 +190,38 @@ public class CentrifugeBlockEntity extends BlockEntity implements MenuProvider {
         return this.fuelTime > 0;
     }
 
-    private void craftItem() {
+    private void craftItemSugar() {
         ItemStack result = new ItemStack(ModItems.GOLDEN_RAW_SUGAR.get(), 1);
         this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
                 this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
         this.itemHandler.getStackInSlot(INPUT_SLOT).shrink(1);
     }
 
-    private boolean hasRecipe() {
+    private void craftItemCream() {
+        ItemStack result = new ItemStack(ModItems.BUCKET_OF_CREAM.get(), 1);
+        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
+                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
+        this.itemHandler.getStackInSlot(INPUT_SLOT).shrink(1);
+    }
+
+    private boolean hasRecipeSugar() {
         boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.CRYSTALLIZED_SUGAR_CANE_JUICE_BUCKET.get();
         boolean hasFuel = this.itemHandler.getStackInSlot(FUEL_SLOT).getItem() == Items.OAK_LOG;
         ItemStack result = new ItemStack(ModItems.GOLDEN_RAW_SUGAR.get(), 1);
 
         return hasCraftingItem && (hasFuel || this.fuelTime > 0) && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    private boolean hasRecipeCream() {
+        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == Items.MILK_BUCKET.asItem();
+        boolean hasFuel = this.itemHandler.getStackInSlot(FUEL_SLOT).getItem() == Items.OAK_LOG;
+        ItemStack result = new ItemStack(ModItems.BUCKET_OF_CREAM.get(), 1);
+
+        return hasCraftingItem && (hasFuel || this.fuelTime > 0) && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+    }
+
+    private boolean validRecipe() {
+        return hasRecipeSugar() || hasRecipeCream();
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {
